@@ -71,13 +71,13 @@ public class UsersController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/edit/{id}")
-    public String showUser(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("roles", userService.getAllRoles());
+ //   @GetMapping("/admin/edit/{id}")
+ //   public String showUser(@PathVariable("id") int id, Model model) {
+ //       model.addAttribute("user", userService.getUser(id));
+ //       model.addAttribute("roles", userService.getAllRoles());
 
-        return "edit";
-    }
+ //       return "edit";
+ //   }
 
     @PostMapping("/admin/edit/{id}")
     public String edit(@ModelAttribute("user") User user) {
