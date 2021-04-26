@@ -40,27 +40,29 @@ public class UsersController {
     }
 
     @GetMapping("/user")
-    public String getUserInfo(Model model) {
+    public String getUserInfo(ModelMap model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("user", userService.getUserByName(auth.getName()));
+        model.addAttribute("userData", userService.getUserByName(auth.getName()));
 
-        return "info";
+        return "user";
     }
 
     @GetMapping("/admin")
-    public String getAllUsers(Model model) {
+    public String getAllUsers(ModelMap model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("userData", userService.getUserByName(auth.getName()));
         model.addAttribute("users", userService.getAllUsers());
-
-        return "all";
-    }
-
-    @GetMapping("/admin/add")
-    public String newUser(Model model) {//@ModelAttribute("user") User user,
         model.addAttribute("user", new User());
         model.addAttribute("roles", userService.getAllRoles());
-
-        return "add";
+        return "main";
     }
+
+ //   @GetMapping("/admin/add")
+ //   public String newUser(Model model) {//@ModelAttribute("user") User user,
+ //       model.addAttribute("user", new User());
+ //       model.addAttribute("roles", userService.getAllRoles());
+ //       return "main";
+ //   }
 
     @PostMapping("/admin/add")
     public String create(@ModelAttribute("user") User user) {
@@ -77,7 +79,7 @@ public class UsersController {
         return "edit";
     }
 
-    @PostMapping("/admin/edit")
+    @PostMapping("/admin/edit/{id}")
     public String edit(@ModelAttribute("user") User user) {
         userService.editUser(user);
 
