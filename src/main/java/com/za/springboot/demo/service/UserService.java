@@ -11,7 +11,7 @@ public interface UserService {
 
     public List<Role> getAllRoles();
 
-    public void saveUser(User user);
+    public User saveUser(User user);
 
     public void editUser(User user);
 
