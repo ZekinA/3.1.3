@@ -1,6 +1,5 @@
 package com.za.springboot.demo.controllers;
 
-import com.za.springboot.demo.model.Role;
 import com.za.springboot.demo.model.User;
 import com.za.springboot.demo.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping("/api")
@@ -23,20 +22,22 @@ public class RestUsersController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users,HttpStatus.OK) ;
     }
 
     @GetMapping("/user")
-    public User getUser(User user) {
+    public ResponseEntity<User> getUser (){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        user = userService.getUserByName(auth.getName());
-        return user;
+        User user = userService.getUserByName(auth.getName());
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable("id") int id){
-        return userService.getUser(id);
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id){
+        User user = userService.getUser(id);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @PostMapping("/users")
